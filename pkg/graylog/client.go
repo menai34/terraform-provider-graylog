@@ -45,7 +45,15 @@ func (c *Client) do(method string, url string, reqValue, respValue interface{}) 
 	}
 
 	if c.Credentials != "" {
-		jsonFile, err := os.Open(c.Credentials)
+		credentialPath := ""
+		if strings.HasPrefix(c.Credentials, "~") {
+			home := os.Getenv("HOME")
+			credentialPath = home + c.Credentials[1:]
+		} else {
+			credentialPath = c.Credentials
+		}
+
+		jsonFile, err := os.Open(credentialPath)
 		if err != nil {
 			return err
 		}
