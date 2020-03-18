@@ -2,7 +2,6 @@ package provider
 
 import (
 	"fmt"
-
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/rebuy-de/terraform-provider-graylog/pkg/graylog"
 	"github.com/rebuy-de/terraform-provider-graylog/pkg/types"
@@ -44,7 +43,7 @@ func resourceGraylogSidecarConfigurationVariableCreate(d *schema.ResourceData, m
 		return err
 	}
 
-	response := new(types.SidecarConfigurationVariableCreateResponse)
+	response := new(types.SidecarConfigurationVariableActionResponse)
 	err = client.Post("/api/sidecar/configuration_variables", request, response)
 	if err != nil {
 		return err
@@ -58,7 +57,7 @@ func resourceGraylogSidecarConfigurationVariableCreate(d *schema.ResourceData, m
 func resourceGraylogSidecarConfigurationVariableRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*graylog.Client)
 
-	input := new(types.SidecarConfigurationVariableCreateResponse)
+	input := new(types.SidecarConfigurationVariableActionResponse)
 	url := fmt.Sprintf("/api/sidecar/configuration_variables")
 	err := client.Get(url, input)
 	_ = err // TODO: Gracefully handle 404s
@@ -74,7 +73,7 @@ func resourceGraylogSidecarConfigurationVariableRead(d *schema.ResourceData, met
 func resourceGraylogSidecarConfigurationVariableUpdate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*graylog.Client)
 
-	request, err := resourceGraylogSidecarConfigurationVariableGenerateCreateRequest(d)
+	request, err := resourceGraylogSidecarConfigurationVariableGenerateUpdateRequest(d)
 	if err != nil {
 		return err
 	}
@@ -85,7 +84,7 @@ func resourceGraylogSidecarConfigurationVariableUpdate(d *schema.ResourceData, m
 		return err
 	}
 
-	return resourceGraylogSidecarConfigurationRead(d, meta)
+	return resourceGraylogSidecarConfigurationVariableRead(d, meta)
 }
 
 func resourceGraylogSidecarConfigurationVariableDelete(d *schema.ResourceData, meta interface{}) error {
@@ -96,6 +95,17 @@ func resourceGraylogSidecarConfigurationVariableDelete(d *schema.ResourceData, m
 
 func resourceGraylogSidecarConfigurationVariableGenerateCreateRequest(d *schema.ResourceData) (*types.SidecarConfigurationVariableCreateRequest, error) {
 	request := &types.SidecarConfigurationVariableCreateRequest{
+		Name:        d.Get("name").(string),
+		Description: d.Get("description").(string),
+		Content:     d.Get("content").(string),
+	}
+
+	return request, nil
+}
+
+func resourceGraylogSidecarConfigurationVariableGenerateUpdateRequest(d *schema.ResourceData) (*types.SidecarConfigurationVariableUpdateRequest, error) {
+	request := &types.SidecarConfigurationVariableUpdateRequest{
+		ID:          d.Id(),
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		Content:     d.Get("content").(string),
