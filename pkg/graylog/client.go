@@ -5,11 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strings"
-
-	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -37,7 +36,7 @@ func (c *Client) do(method string, url string, reqValue, respValue interface{}) 
 		strings.TrimLeft(url, "/"),
 	)
 
-	log.Debugf("%s %s", method, url)
+	log.Printf("[DEBUG] %s %s", method, url)
 
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
@@ -55,7 +54,7 @@ func (c *Client) do(method string, url string, reqValue, respValue interface{}) 
 
 		jsonFile, err := os.Open(credentialPath)
 		if err != nil {
-			return err
+			return fmt.Errorf("error opening file %s", err)
 		}
 
 		byteValue, _ := ioutil.ReadAll(jsonFile)
@@ -78,7 +77,7 @@ func (c *Client) do(method string, url string, reqValue, respValue interface{}) 
 			return err
 		}
 
-		log.Debug(buf.String())
+		log.Printf("[DEBUG] RequestValue: %s", buf.String())
 		req.Body = ioutil.NopCloser(buf)
 		req.Header.Set("Content-Type", "application/json")
 	}
@@ -89,11 +88,13 @@ func (c *Client) do(method string, url string, reqValue, respValue interface{}) 
 	}
 
 	if resp.StatusCode/100 != 2 {
-		log.Debug(ReaderToString(resp.Body))
-		return fmt.Errorf("Unexpected status %d, Response body: %s", resp.StatusCode, ReaderToString(resp.Body))
+		//log.Debug(ReaderToString(resp.Body))
+		return fmt.Errorf("unexpected status %d", resp.StatusCode)
 	}
 
 	if respValue != nil {
+		jsonOutputs, _ := json.MarshalIndent(resp.Body, "", "  ")
+		log.Printf("[DEBUG] Detail: %s", jsonOutputs)
 		return json.NewDecoder(resp.Body).Decode(respValue)
 	}
 
