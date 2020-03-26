@@ -3,7 +3,7 @@ package provider
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/rebuy-de/terraform-provider-graylog/pkg/graylog"
+	"github.com/menai34/terraform-provider-graylog/pkg/graylog"
 )
 
 func Provider() terraform.ResourceProvider {
