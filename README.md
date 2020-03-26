@@ -4,9 +4,9 @@ Fork from [https://github.com/rebuy-de/terraform-provider-graylog](https://githu
 
 # Terraform Provider Graylog
 
-[![Build Status](https://travis-ci.org/rebuy-de/terraform-provider-graylog.svg?branch=master)](https://travis-ci.org/rebuy-de/terraform-provider-graylog)
-[![license](https://img.shields.io/github/license/rebuy-de/terraform-provider-graylog.svg)]()
-[![GitHub release](https://img.shields.io/github/release/rebuy-de/terraform-provider-graylog.svg)]()
+[![Build Status](https://travis-ci.org/menai34/terraform-provider-graylog.svg?branch=master)](https://travis-ci.org/menai34/terraform-provider-graylog)
+[![license](https://img.shields.io/github/license/menai34/terraform-provider-graylog.svg)]()
+[![GitHub release](https://img.shields.io/github/release/menai34/terraform-provider-graylog.svg)]()
 
 A [Terraform](https://www.terraform.io/) provider for configuring
 [Graylog](https://www.graylog.org/).

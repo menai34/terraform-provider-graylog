@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/plugin"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/rebuy-de/terraform-provider-graylog/pkg/provider"
+	"github.com/menai34/terraform-provider-graylog/pkg/provider"
 )
 
 func main() {

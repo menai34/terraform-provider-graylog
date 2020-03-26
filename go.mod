@@ -1,4 +1,4 @@
-module github.com/rebuy-de/terraform-provider-graylog
+module github.com/menai34/terraform-provider-graylog
 
 go 1.13
 

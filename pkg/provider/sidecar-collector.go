@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/rebuy-de/terraform-provider-graylog/pkg/graylog"
-	"github.com/rebuy-de/terraform-provider-graylog/pkg/types"
+	"github.com/menai34/terraform-provider-graylog/pkg/graylog"
+	"github.com/menai34/terraform-provider-graylog/pkg/types"
 )
 
 func resourceGraylogSidecarCollector() *schema.Resource {
